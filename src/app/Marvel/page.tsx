@@ -10,10 +10,10 @@ const timestamp = Date.now();
 
 export default async function Marvel() {
   const urlHash = md5(`${timestamp}${MARVEL_PRIVATE_KEY}${MARVEL_PUBLIC_KEY}`);
-  
+
   try {
-    const url = `http://gateway.marvel.com/v1/public/comics?apikey=${MARVEL_PUBLIC_KEY}&ts=${timestamp}&hash=${urlHash}`;
-              
+    const url = `http://gateway.marvel.com/v1/public/comics?ts=${timestamp}&apikey=${MARVEL_PUBLIC_KEY}&hash=${urlHash}`;
+
     const marvelResponse = await fetch(url);
     const marvelData = await marvelResponse.json();
     console.log(marvelData);
