@@ -13,4 +13,6 @@ async function sha256(message) {
     return hashHex;
 }
 
-export { sha256 };
+const fetcher = (...args) => fetch(...args).then((res) => res.json());
+
+export { sha256, fetcher };
