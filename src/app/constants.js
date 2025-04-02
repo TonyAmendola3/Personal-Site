@@ -1,0 +1,7 @@
+const MARVEL_PUBLIC_KEY = "bfc4e89644a850d1ce1b2aed0f8b06ee";
+const MARVEL_PRIVATE_KEY = "5256df6f39fdb898ede98ff2184cd6147ff9932c";
+
+export {
+    MARVEL_PUBLIC_KEY,
+    MARVEL_PRIVATE_KEY
+};
