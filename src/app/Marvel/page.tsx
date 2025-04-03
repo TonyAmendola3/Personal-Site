@@ -8,12 +8,13 @@ import { marvelAtom } from '../atoms';
 import { MARVEL_PUBLIC_KEY } from '../constants';
 import { fetchMarvel } from './helpers';
 
-interface marvelCharType {
-  id: Number,
-  name: String,
+interface MarvelCharType {
+  id: number,
+  name: string,
+  resourceURI: string,
   thumbnail: {
-    path: String,
-    extension: String
+    path: string,
+    extension: string
   }
 }
 
@@ -22,6 +23,8 @@ export default function Marvel() {
   const setMarvel = useSetAtom(marvelAtom);
   const [hasError, setHasError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [characterDetails, setCharacterDetails] = useState({});
+  const [clickedChar, setClickedChar] = useState("");
 
   const getMarvelCharacter = (searchStr?: string):any => {
     const url = `https://gateway.marvel.com/v1/public/characters?apikey=${MARVEL_PUBLIC_KEY}&nameStartsWith=${searchStr}`;
@@ -45,12 +48,30 @@ export default function Marvel() {
     }
   }
 
+  const getCharacterDetails = async (character: MarvelCharType): Promise<void> => {
+    const resourceURI = character.resourceURI;
+    setClickedChar(character.id.toString());
+
+    const { data, error } = await fetchMarvel(resourceURI);
+
+    if (error) {
+      setCharacterDetails({
+        error: "error getting details",
+      });
+    }
+
+    if (data) {
+      setCharacterDetails(data)
+    }
+  }
+
   const renderCharacters = () => {
-    return marvelCharacters.results.map((character: marvelCharType) => {
+    return marvelCharacters.results.map((character: MarvelCharType) => {
       return (
-        <div key={character.id}>
-          <img src={`${character.thumbnail.path}.${character.thumbnail.extension}`} />
-          <span>{character.name}</span>
+        <div className='flex' key={character.id.toString()}>
+          <img className='w-20 h-20 flex-col' src={`${character.thumbnail.path}.${character.thumbnail.extension}`} />
+          <div className='flex-col ml-5 self-center cursor-pointer text-sky-500 hover:text-sky-700' onClick={() => getCharacterDetails(character)}>{character.name}</div>
+          <div>{clickedChar === character.id.toString() && characterDetails.toString()}</div>
         </div>
       )
     })
