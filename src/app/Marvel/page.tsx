@@ -1,5 +1,8 @@
 'use client';
 
+// To Do: better layout and interactions
+// improve performance
+
 import { ChangeEvent, useState } from 'react';
 import { useAtomValue, useSetAtom } from 'jotai';
 import useSWR, {SWRResponse} from 'swr';
