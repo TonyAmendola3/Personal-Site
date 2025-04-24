@@ -3,7 +3,7 @@ export default function AboutMe() {
       <div>
         <main>
          <div>
-          I like places and things
+          About Me coming soon ...
           </div>
         </main>
       </div>
